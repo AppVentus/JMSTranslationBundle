@@ -18,9 +18,9 @@
 
 namespace JMS\TranslationBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Reference;
 
 class MountFileVisitorsPass implements CompilerPassInterface
 {
@@ -31,7 +31,7 @@ class MountFileVisitorsPass implements CompilerPassInterface
         }
         $def = $container->getDefinition('jms_translation.extractor.file_extractor');
 
-        $visitors = array();
+        $visitors = [];
         foreach ($container->findTaggedServiceIds('jms_translation.file_visitor') as $id => $attr) {
             $visitors[] = new Reference($id);
         }

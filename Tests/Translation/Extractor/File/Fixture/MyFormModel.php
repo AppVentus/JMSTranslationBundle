@@ -25,10 +25,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class MyFormModel implements TranslationContainerInterface
 {
-    private static $choices = array(
+    private static $choices = [
         'foo' => 'form.label.choice.foo',
         'bar' => 'form.label.choice.bar',
-    );
+    ];
 
     /**
      * @Assert\NotBlank(message = "form.error.name_required")
@@ -37,7 +37,7 @@ class MyFormModel implements TranslationContainerInterface
 
     public static function getTranslationMessages()
     {
-        $messages = array();
+        $messages = [];
 
         foreach (self::$choices as $trans) {
             $message = new Message($trans);

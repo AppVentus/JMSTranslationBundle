@@ -19,11 +19,10 @@
 namespace JMS\TranslationBundle\Translation\Dumper;
 
 use JMS\TranslationBundle\Exception\RuntimeException;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Translation\MessageCatalogue as SymfonyCatalogue;
-use Symfony\Component\Translation\Dumper\DumperInterface as SymfonyDumper;
-
 use JMS\TranslationBundle\Model\MessageCatalogue;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Translation\Dumper\DumperInterface as SymfonyDumper;
+use Symfony\Component\Translation\MessageCatalogue as SymfonyCatalogue;
 
 /**
  * Adapter for Symfony's dumpers.
@@ -52,7 +51,7 @@ class SymfonyDumperAdapter implements DumperInterface
 
         foreach ($catalogue->getDomain($domain)->all() as $id => $message) {
             $symfonyCatalogue->add(
-                array($id => $message->getLocaleString()),
+                [$id => $message->getLocaleString()],
                 $domain
             );
         }
@@ -62,9 +61,9 @@ class SymfonyDumperAdapter implements DumperInterface
             throw new RuntimeException(sprintf('Could not create temporary directory "%s".', $tmpPath));
         }
 
-        $this->dumper->dump($symfonyCatalogue, array(
+        $this->dumper->dump($symfonyCatalogue, [
             'path' => $tmpPath,
-        ));
+        ]);
 
         if (!is_file($tmpFile = $tmpPath.'/'.$domain.'.'.$catalogue->getLocale().'.'.$this->format)) {
             throw new RuntimeException(sprintf('Could not find dumped translation file "%s".', $tmpFile));

@@ -18,13 +18,12 @@
 
 namespace JMS\TranslationBundle\Tests\Translation\Extractor\File;
 
-use JMS\TranslationBundle\Exception\RuntimeException;
 use Doctrine\Common\Annotations\DocParser;
-
-use JMS\TranslationBundle\Translation\Extractor\File\FormExtractor;
+use JMS\TranslationBundle\Exception\RuntimeException;
 use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
+use JMS\TranslationBundle\Translation\Extractor\File\FormExtractor;
 
 class FormExtractorTest extends \PHPUnit_Framework_TestCase
 {
@@ -115,7 +114,7 @@ class FormExtractorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * This test is used to check compatibility with Symfony 2.1
-     * In Symfony 2.1 the AbstractType must use FormBuilderInterface instead of FormBuilder
+     * In Symfony 2.1 the AbstractType must use FormBuilderInterface instead of FormBuilder.
      */
     public function testExtractWithInterface()
     {
@@ -145,7 +144,7 @@ class FormExtractorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * This test is used to check if the default 'translation_domain' option
-     * set for the entire form is extracted correctly
+     * set for the entire form is extracted correctly.
      */
     public function testExtractWithDefaultDomain()
     {
@@ -171,7 +170,7 @@ class FormExtractorTest extends \PHPUnit_Framework_TestCase
 
     /**
      * This test is used to check if translation from subscriber classes and even closures
-     * are correctly extracted
+     * are correctly extracted.
      */
     public function testExtractWithWithSubscriberAndListener()
     {
@@ -227,11 +226,11 @@ class FormExtractorTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $docParser = new DocParser();
-        $docParser->setImports(array(
-            'desc' => 'JMS\TranslationBundle\Annotation\Desc',
+        $docParser->setImports([
+            'desc'    => 'JMS\TranslationBundle\Annotation\Desc',
             'meaning' => 'JMS\TranslationBundle\Annotation\Meaning',
-            'ignore' => 'JMS\TranslationBundle\Annotation\Ignore',
-        ));
+            'ignore'  => 'JMS\TranslationBundle\Annotation\Ignore',
+        ]);
         $docParser->setIgnoreNotImportedAnnotations(true);
 
         $this->extractor = new FormExtractor($docParser);

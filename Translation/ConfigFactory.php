@@ -24,7 +24,7 @@ class ConfigFactory
 {
     private $builders;
 
-    public function __construct(array $builders = array())
+    public function __construct(array $builders = [])
     {
         $this->builders = $builders;
     }

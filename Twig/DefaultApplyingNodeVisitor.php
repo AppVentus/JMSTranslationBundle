@@ -45,7 +45,6 @@ class DefaultApplyingNodeVisitor implements \Twig_NodeVisitorInterface
 
         if ($node instanceof \Twig_Node_Expression_Filter
                 && 'desc' === $node->getNode('filter')->getAttribute('value')) {
-
             $transNode = $node->getNode('node');
             while ($transNode instanceof \Twig_Node_Expression_Filter
                        && 'trans' !== $transNode->getNode('filter')->getAttribute('value')
@@ -65,7 +64,7 @@ class DefaultApplyingNodeVisitor implements \Twig_NodeVisitorInterface
             // so that we can catch a possible exception when the default translation has not yet
             // been extracted
             if ('transchoice' === $transNode->getNode('filter')->getAttribute('value')) {
-                $transchoiceArguments = new \Twig_Node_Expression_Array(array(), $transNode->getLine());
+                $transchoiceArguments = new \Twig_Node_Expression_Array([], $transNode->getLine());
                 $transchoiceArguments->addElement($wrappingNode->getNode('node'));
                 $transchoiceArguments->addElement($defaultNode);
                 foreach ($wrappingNode->getNode('arguments') as $arg) {
@@ -83,20 +82,19 @@ class DefaultApplyingNodeVisitor implements \Twig_NodeVisitorInterface
             // if the |trans filter has replacements parameters
             // (e.g. |trans({'%foo%': 'bar'}))
             if ($wrappingNode->getNode('arguments')->hasNode(0)) {
-
-                $lineno =  $wrappingNode->getLine();
+                $lineno = $wrappingNode->getLine();
 
                 // remove the replacements from the test node
                 $testNode->setNode('arguments', clone $testNode->getNode('arguments'));
-                $testNode->getNode('arguments')->setNode(0, new \Twig_Node_Expression_Array(array(), $lineno));
+                $testNode->getNode('arguments')->setNode(0, new \Twig_Node_Expression_Array([], $lineno));
 
                 // wrap the default node in a |replace filter
                 $defaultNode = new \Twig_Node_Expression_Filter(
                     clone $node->getNode('arguments')->getNode(0),
                     new \Twig_Node_Expression_Constant('replace', $lineno),
-                    new \Twig_Node(array(
-                        clone $wrappingNode->getNode('arguments')->getNode(0)
-                    )),
+                    new \Twig_Node([
+                        clone $wrappingNode->getNode('arguments')->getNode(0),
+                    ]),
                     $lineno
                 );
             }

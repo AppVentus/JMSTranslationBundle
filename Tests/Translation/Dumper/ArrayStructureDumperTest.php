@@ -34,14 +34,13 @@ class ArrayStructureDumperTest extends \PHPUnit_Framework_TestCase
         $dumper
             ->expects($this->once())
             ->method('dumpStructure')
-            ->with(array(
-                'foo' => array(
-                    'bar' => new Message('foo.bar'),
+            ->with([
+                'foo' => [
+                    'bar'     => new Message('foo.bar'),
                     'bar.baz' => new Message('foo.bar.baz'),
-                ),
-            ))
-            ->will($this->returnValue('foo'))
-        ;
+                ],
+            ])
+            ->will($this->returnValue('foo'));
 
         $this->assertEquals('foo', $dumper->dump($catalogue, 'messages'));
     }

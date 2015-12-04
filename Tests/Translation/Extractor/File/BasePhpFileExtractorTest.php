@@ -18,15 +18,13 @@
 
 namespace JMS\TranslationBundle\Tests\Translation\Extractor\File;
 
-use JMS\TranslationBundle\Model\MessageCatalogue;
-
 use Doctrine\Common\Annotations\DocParser;
-
+use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
 
 abstract class BasePhpFileExtractorTest extends \PHPUnit_Framework_TestCase
 {
-    protected final function extract($file, FileVisitorInterface $extractor = null)
+    final protected function extract($file, FileVisitorInterface $extractor = null)
     {
         if (!is_file($file = __DIR__.'/Fixture/'.$file)) {
             throw new RuntimeException(sprintf('The file "%s" does not exist.', $file));
@@ -49,14 +47,14 @@ abstract class BasePhpFileExtractorTest extends \PHPUnit_Framework_TestCase
 
     abstract protected function getDefaultExtractor();
 
-    protected final function getDocParser()
+    final protected function getDocParser()
     {
         $docParser = new DocParser();
-        $docParser->setImports(array(
-            'desc' => 'JMS\TranslationBundle\Annotation\Desc',
+        $docParser->setImports([
+            'desc'    => 'JMS\TranslationBundle\Annotation\Desc',
             'meaning' => 'JMS\TranslationBundle\Annotation\Meaning',
-            'ignore' => 'JMS\TranslationBundle\Annotation\Ignore',
-        ));
+            'ignore'  => 'JMS\TranslationBundle\Annotation\Ignore',
+        ]);
         $docParser->setIgnoreNotImportedAnnotations(true);
 
         return $docParser;

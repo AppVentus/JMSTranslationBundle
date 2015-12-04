@@ -18,22 +18,20 @@
 
 namespace JMS\TranslationBundle\Tests\Functional;
 
-use JMS\TranslationBundle\Command\ExtractTranslationCommand;
 use JMS\TranslationBundle\Util\FileUtils;
-use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Input\ArgvInput;
 
 class ExtractCommandTest extends BaseCommandTestCase
 {
     public function testExtract()
     {
-        $input = new ArgvInput(array(
+        $input = new ArgvInput([
             'app/console',
             'translation:extract',
             'en',
             '--dir='.($inputDir = __DIR__.'/../Translation/Extractor/Fixture/SimpleTest'),
-            '--output-dir='.($outputDir = sys_get_temp_dir().'/'.uniqid('extract'))
-        ));
+            '--output-dir='.($outputDir = sys_get_temp_dir().'/'.uniqid('extract')),
+        ]);
 
         $expectedOutput =
             'Extracting Translations for locale en'."\n"
@@ -49,8 +47,7 @@ class ExtractCommandTest extends BaseCommandTestCase
            .'Extracting translation keys'."\n"
            .'Extracting messages from directory : '.$inputDir."\n"
            .'Writing translation file "'.$outputDir.'/messages.en.xliff".'."\n"
-           .'done!'."\n"
-        ;
+           .'done!'."\n";
 
         $this->getApp()->run($input, $output = new Output());
         $this->assertEquals($expectedOutput, $output->getContent());
@@ -58,38 +55,37 @@ class ExtractCommandTest extends BaseCommandTestCase
         $files = FileUtils::findTranslationFiles($outputDir);
         $this->assertTrue(isset($files['messages']['en']));
     }
-    
+
     public function testExtractDryRun()
     {
-        $input = new ArgvInput(array(
+        $input = new ArgvInput([
             'app/console',
             'translation:extract',
             'en',
             '--dir='.($inputDir = __DIR__.'/../Translation/Extractor/Fixture/SimpleTest'),
             '--output-dir='.($outputDir = sys_get_temp_dir().'/'.uniqid('extract')),
             '--dry-run',
-            '--verbose'
-        ));
+            '--verbose',
+        ]);
 
-        $expectedOutput = array(
-            'php.foo->',                                                                                                                                 
-            'php.bar-> Bar',                                                                                                                                 
-            'php.baz->',                                                                                                                                 
-            'php.foo_bar-> Foo',                                                                                                                                
-            'twig.foo->',                                                                                                                                  
-            'twig.bar-> Bar',                                                                                                                                  
-            'twig.baz->',                                                                                                                                  
-            'twig.foo_bar-> Foo',                                                                                                                                  
-            'form.foo->',                                                                                                                                  
-            'form.bar->',                                                                                                                                  
+        $expectedOutput = [
+            'php.foo->',
+            'php.bar-> Bar',
+            'php.baz->',
+            'php.foo_bar-> Foo',
+            'twig.foo->',
+            'twig.bar-> Bar',
+            'twig.baz->',
+            'twig.foo_bar-> Foo',
+            'form.foo->',
+            'form.bar->',
             'controller.foo-> Foo',
-        );
+        ];
 
         $this->getApp()->run($input, $output = new Output());
-        
-        foreach($expectedOutput as $transID){
-            $this->assertContains($transID, $output->getContent());    
-        }
 
+        foreach ($expectedOutput as $transID) {
+            $this->assertContains($transID, $output->getContent());
+        }
     }
 }

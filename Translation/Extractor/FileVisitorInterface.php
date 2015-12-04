@@ -32,30 +32,30 @@ interface FileVisitorInterface
      *
      * This is not called if handled by a more specific method.
      *
-     * @param \SplFileInfo $file
+     * @param \SplFileInfo     $file
      * @param MessageCatalogue $catalogue
      */
-    function visitFile(\SplFileInfo $file, MessageCatalogue $catalogue);
+    public function visitFile(\SplFileInfo $file, MessageCatalogue $catalogue);
 
     /**
      * Called when a PHP file is encountered.
      *
      * The visitor already gets a parsed AST passed along.
      *
-     * @param \SplFileInfo $file
+     * @param \SplFileInfo     $file
      * @param MessageCatalogue $catalogue
-     * @param \PHPParser_Node $ast
+     * @param \PHPParser_Node  $ast
      */
-    function visitPhpFile(\SplFileInfo $file, MessageCatalogue $catalogue, array $ast);
+    public function visitPhpFile(\SplFileInfo $file, MessageCatalogue $catalogue, array $ast);
 
     /**
      * Called when a Twig file is encountered.
      *
      * The visitor already gets a parsed AST passed along.
      *
-     * @param \SplFileInfo $file
+     * @param \SplFileInfo     $file
      * @param MessageCatalogue $catalogue
-     * @param \Twig_Node $ast
+     * @param \Twig_Node       $ast
      */
-    function visitTwigFile(\SplFileInfo $file, MessageCatalogue $catalogue, \Twig_Node $ast);
+    public function visitTwigFile(\SplFileInfo $file, MessageCatalogue $catalogue, \Twig_Node $ast);
 }

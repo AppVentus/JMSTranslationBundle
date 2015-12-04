@@ -32,7 +32,6 @@ class ChangeSet
     public function getAddedMessages()
     {
         return $this->addedMessages;
-
     }
 
     public function getDeletedMessages()

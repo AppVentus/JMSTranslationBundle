@@ -18,17 +18,14 @@
 
 namespace JMS\TranslationBundle\Translation\Extractor;
 
-use JMS\TranslationBundle\Twig\DefaultApplyingNodeVisitor;
-
 use JMS\TranslationBundle\Exception\InvalidArgumentException;
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use JMS\TranslationBundle\Logger\LoggerAwareInterface;
-
-use JMS\TranslationBundle\Twig\RemovingNodeVisitor;
-
-use JMS\TranslationBundle\Translation\ExtractorInterface;
 use JMS\TranslationBundle\Model\MessageCatalogue;
+use JMS\TranslationBundle\Translation\ExtractorInterface;
+use JMS\TranslationBundle\Twig\DefaultApplyingNodeVisitor;
+use JMS\TranslationBundle\Twig\RemovingNodeVisitor;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 /**
  * File-based extractor.
@@ -44,8 +41,8 @@ class FileExtractor implements ExtractorInterface, LoggerAwareInterface
     private $directory;
     private $removingTwigVisitor;
     private $defaultApplyingTwigVisitor;
-    private $excludedNames = array();
-    private $excludedDirs = array();
+    private $excludedNames = [];
+    private $excludedDirs = [];
     private $logger;
 
     public function __construct(\Twig_Environment $twig, LoggerInterface $logger, array $visitors)
@@ -68,8 +65,8 @@ class FileExtractor implements ExtractorInterface, LoggerAwareInterface
 
     public function reset()
     {
-        $this->excludedNames = array();
-        $this->excludedDirs  = array();
+        $this->excludedNames = [];
+        $this->excludedDirs = [];
     }
 
     public function setLogger(LoggerInterface $logger)
@@ -139,7 +136,7 @@ class FileExtractor implements ExtractorInterface, LoggerAwareInterface
             $catalogue = new MessageCatalogue();
             foreach ($finder as $file) {
                 $visitingMethod = 'visitFile';
-                $visitingArgs = array($file, $catalogue);
+                $visitingArgs = [$file, $catalogue];
 
                 $this->logger->debug(sprintf('Parsing file "%s"', $file));
 
@@ -155,14 +152,14 @@ class FileExtractor implements ExtractorInterface, LoggerAwareInterface
 
                         $visitingMethod = 'visitPhpFile';
                         $visitingArgs[] = $ast;
-                    } else if ('twig' === $extension) {
+                    } elseif ('twig' === $extension) {
                         $visitingMethod = 'visitTwigFile';
                         $visitingArgs[] = $this->twig->parse($this->twig->tokenize(file_get_contents($file), (string) $file));
                     }
                 }
 
                 foreach ($this->visitors as $visitor) {
-                    call_user_func_array(array($visitor, $visitingMethod), $visitingArgs);
+                    call_user_func_array([$visitor, $visitingMethod], $visitingArgs);
                 }
             }
 

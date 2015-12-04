@@ -18,16 +18,16 @@
 
 namespace JMS\TranslationBundle\Translation\Extractor\File;
 
-use JMS\TranslationBundle\Exception\RuntimeException;
 use Doctrine\Common\Annotations\DocParser;
-use JMS\TranslationBundle\Model\FileSource;
-use JMS\TranslationBundle\Model\Message;
-use JMS\TranslationBundle\Annotation\Meaning;
 use JMS\TranslationBundle\Annotation\Desc;
 use JMS\TranslationBundle\Annotation\Ignore;
-use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
-use JMS\TranslationBundle\Model\MessageCatalogue;
+use JMS\TranslationBundle\Annotation\Meaning;
+use JMS\TranslationBundle\Exception\RuntimeException;
 use JMS\TranslationBundle\Logger\LoggerAwareInterface;
+use JMS\TranslationBundle\Model\FileSource;
+use JMS\TranslationBundle\Model\Message;
+use JMS\TranslationBundle\Model\MessageCatalogue;
+use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 /**
@@ -63,12 +63,11 @@ class DefaultPhpFileExtractor implements LoggerAwareInterface, FileVisitorInterf
 
     public function enterNode(\PHPParser_Node $node)
     {
-
         if (!$node instanceof \PHPParser_Node_Expr_MethodCall
             || !is_string($node->name)
             || ('trans' !== strtolower($node->name) && 'transchoice' !== strtolower($node->name))) {
-
             $this->previousNode = $node;
+
             return;
         }
 
@@ -78,9 +77,9 @@ class DefaultPhpFileExtractor implements LoggerAwareInterface, FileVisitorInterf
             foreach ($this->docParser->parse($docComment, 'file '.$this->file.' near line '.$node->getLine()) as $annot) {
                 if ($annot instanceof Ignore) {
                     $ignore = true;
-                } else if ($annot instanceof Desc) {
+                } elseif ($annot instanceof Desc) {
                     $desc = $annot->text;
-                } else if ($annot instanceof Meaning) {
+                } elseif ($annot instanceof Meaning) {
                     $meaning = $annot->text;
                 }
             }
@@ -95,6 +94,7 @@ class DefaultPhpFileExtractor implements LoggerAwareInterface, FileVisitorInterf
 
             if ($this->logger) {
                 $this->logger->err($message);
+
                 return;
             }
 
@@ -114,6 +114,7 @@ class DefaultPhpFileExtractor implements LoggerAwareInterface, FileVisitorInterf
 
                 if ($this->logger) {
                     $this->logger->err($message);
+
                     return;
                 }
 
@@ -140,11 +141,25 @@ class DefaultPhpFileExtractor implements LoggerAwareInterface, FileVisitorInterf
         $this->traverser->traverse($ast);
     }
 
-    public function beforeTraverse(array $nodes) { }
-    public function leaveNode(\PHPParser_Node $node) { }
-    public function afterTraverse(array $nodes) { }
-    public function visitFile(\SplFileInfo $file, MessageCatalogue $catalogue) { }
-    public function visitTwigFile(\SplFileInfo $file, MessageCatalogue $catalogue, \Twig_Node $ast) { }
+    public function beforeTraverse(array $nodes)
+    {
+    }
+
+    public function leaveNode(\PHPParser_Node $node)
+    {
+    }
+
+    public function afterTraverse(array $nodes)
+    {
+    }
+
+    public function visitFile(\SplFileInfo $file, MessageCatalogue $catalogue)
+    {
+    }
+
+    public function visitTwigFile(\SplFileInfo $file, MessageCatalogue $catalogue, \Twig_Node $ast)
+    {
+    }
 
     private function getDocCommentForNode(\PHPParser_Node $node)
     {
@@ -164,6 +179,6 @@ class DefaultPhpFileExtractor implements LoggerAwareInterface, FileVisitorInterf
             return $this->previousNode->getDocComment();
         }
 
-        return null;
+        return;
     }
 }

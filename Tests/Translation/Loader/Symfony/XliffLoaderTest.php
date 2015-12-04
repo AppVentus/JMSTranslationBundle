@@ -19,21 +19,21 @@
 namespace JMS\TranslationBundle\Tests\Translation\Loader\Symfony;
 
 use JMS\TranslationBundle\Exception\InvalidArgumentException;
+use JMS\TranslationBundle\Translation\Loader\Symfony\XliffLoader;
 use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Translation\MessageCatalogue;
-use JMS\TranslationBundle\Translation\Loader\Symfony\XliffLoader;
 
 class XliffLoaderTest extends BaseLoaderTest
 {
     public function testLoadOldFormat()
     {
         $expected = new MessageCatalogue('en');
-        $expected->add(array(
+        $expected->add([
             'foo1' => 'bar',
             'foo2' => 'bar',
             'foo3' => 'bar',
             'foo4' => 'bar',
-        ));
+        ]);
 
         $file = __DIR__.'/xliff/old_format.xml';
         $expected->addResource(new FileResource($file));

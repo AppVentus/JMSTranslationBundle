@@ -18,7 +18,7 @@
 
 namespace JMS\TranslationBundle\Twig;
 
-/**
+/*
  * Provides some extensions for specifying translation metadata.
  *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
@@ -38,10 +38,10 @@ class TranslationExtension extends \Twig_Extension
 
     public function getNodeVisitors()
     {
-        $visitors = array(
+        $visitors = [
             new NormalizingNodeVisitor(),
             new RemovingNodeVisitor(),
-        );
+        ];
 
         if ($this->debug) {
             $visitors[] = new DefaultApplyingNodeVisitor();
@@ -52,22 +52,22 @@ class TranslationExtension extends \Twig_Extension
 
     public function getFilters()
     {
-        return array(
-            'desc' => new \Twig_Filter_Method($this, 'desc'),
+        return [
+            'desc'    => new \Twig_Filter_Method($this, 'desc'),
             'meaning' => new \Twig_Filter_Method($this, 'meaning'),
-        );
+        ];
     }
 
-    public function transchoiceWithDefault($message, $defaultMessage, $count, array $arguments = array(), $domain = null, $locale = null)
+    public function transchoiceWithDefault($message, $defaultMessage, $count, array $arguments = [], $domain = null, $locale = null)
     {
         if (null === $domain) {
             $domain = 'messages';
         }
 
         try {
-            return $this->translator->transChoice($message, $count, array_merge(array('%count%' => $count), $arguments), $domain, $locale);
+            return $this->translator->transChoice($message, $count, array_merge(['%count%' => $count], $arguments), $domain, $locale);
         } catch (\InvalidArgumentException $unableToChooseTranslationEx) {
-            return $this->translator->transChoice($defaultMessage, $count, array_merge(array('%count%' => $count), $arguments), $domain, $locale);
+            return $this->translator->transChoice($defaultMessage, $count, array_merge(['%count%' => $count], $arguments), $domain, $locale);
         }
     }
 

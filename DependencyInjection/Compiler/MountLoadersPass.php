@@ -19,10 +19,10 @@
 namespace JMS\TranslationBundle\DependencyInjection\Compiler;
 
 use JMS\TranslationBundle\Exception\RuntimeException;
-use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\Reference;
 
 class MountLoadersPass implements CompilerPassInterface
 {
@@ -32,7 +32,7 @@ class MountLoadersPass implements CompilerPassInterface
             return;
         }
 
-        $loaders = array();
+        $loaders = [];
         $i = 0;
         foreach ($container->findTaggedServiceIds('translation.loader') as $id => $attr) {
             if (!isset($attr[0]['alias'])) {
@@ -56,7 +56,6 @@ class MountLoadersPass implements CompilerPassInterface
 
         $container
             ->getDefinition('jms_translation.loader_manager')
-            ->addArgument($loaders)
-        ;
+            ->addArgument($loaders);
     }
 }

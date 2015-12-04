@@ -43,12 +43,14 @@ class Message
     private $desc;
 
     /** The sources where this message occurs */
-    private $sources = array();
+    private $sources = [];
 
     /**
      * @static
+     *
      * @param $id
      * @param string $domain
+     *
      * @return Message
      */
     public static function forThisFile($id, $domain = 'messages')
@@ -65,8 +67,10 @@ class Message
 
     /**
      * @static
+     *
      * @param $id
      * @param string $domain
+     *
      * @return Message
      */
     public static function create($id, $domain = 'messages')
@@ -86,6 +90,7 @@ class Message
 
     /**
      * @param SourceInterface $source
+     *
      * @return Message
      */
     public function addSource(SourceInterface $source)
@@ -182,6 +187,7 @@ class Message
      * In these cases, use mergeExisting() instead.
      *
      * @param Message $message
+     *
      * @throws RuntimeException
      */
     public function merge(Message $message)

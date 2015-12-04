@@ -18,15 +18,14 @@
 
 namespace JMS\TranslationBundle\Command;
 
-use JMS\TranslationBundle\Translation\ConfigBuilder;
-use JMS\TranslationBundle\Exception\RuntimeException;
-use Symfony\Component\Console\Input\InputArgument;
-use JMS\TranslationBundle\Translation\Config;
 use JMS\TranslationBundle\Logger\OutputLogger;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
+use JMS\TranslationBundle\Translation\Config;
+use JMS\TranslationBundle\Translation\ConfigBuilder;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Command for extracting translations.
@@ -55,8 +54,7 @@ class ExtractTranslationCommand extends ContainerAwareCommand
             ->addOption('output-format', null, InputOption::VALUE_REQUIRED, 'The output format that should be used (in most cases, it is better to change only the default-output-format).')
             ->addOption('default-output-format', null, InputOption::VALUE_REQUIRED, 'The default output format (defaults to xliff).')
             ->addOption('keep', null, InputOption::VALUE_NONE, 'Define if the updater service should keep the old translation (defaults to false).')
-            ->addOption('external-translations-dir', null, InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED , 'Load external translation ressources')
-        ;
+            ->addOption('external-translations-dir', null, InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED, 'Load external translation ressources');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -100,20 +98,20 @@ class ExtractTranslationCommand extends ContainerAwareCommand
                 $changeSet = $updater->getChangeSet($config);
 
                 $output->writeln('Added Messages: '.count($changeSet->getAddedMessages()));
-                if($input->hasParameterOption('--verbose')){
-                    foreach($changeSet->getAddedMessages() as $message){
-                        $output->writeln($message->getId(). '-> '.$message->getDesc());
-                    }   
+                if ($input->hasParameterOption('--verbose')) {
+                    foreach ($changeSet->getAddedMessages() as $message) {
+                        $output->writeln($message->getId().'-> '.$message->getDesc());
+                    }
                 }
 
                 if ($config->isKeepOldMessages()) {
                     $output->writeln('Deleted Messages: # none as "Keep Old Translations" is true #');
                 } else {
                     $output->writeln('Deleted Messages: '.count($changeSet->getDeletedMessages()));
-                    if($input->hasParameterOption('--verbose')){
-                        foreach($changeSet->getDeletedMessages() as $message){
-                            $output->writeln($message->getId(). '-> '.$message->getDesc());
-                        }   
+                    if ($input->hasParameterOption('--verbose')) {
+                        foreach ($changeSet->getDeletedMessages() as $message) {
+                            $output->writeln($message->getId().'-> '.$message->getDesc());
+                        }
                     }
                 }
 
@@ -135,7 +133,7 @@ class ExtractTranslationCommand extends ContainerAwareCommand
 
             $bundle = $this->getApplication()->getKernel()->getBundle($bundle);
             $builder->setTranslationsDir($bundle->getPath().'/Resources/translations');
-            $builder->setScanDirs(array($bundle->getPath()));
+            $builder->setScanDirs([$bundle->getPath()]);
         }
 
         if ($dirs = $input->getOption('dir')) {
@@ -188,7 +186,7 @@ class ExtractTranslationCommand extends ContainerAwareCommand
 
         if ($input->hasParameterOption('--keep') || $input->hasParameterOption('--keep=true')) {
             $builder->setKeepOldTranslations(true);
-        } else if ($input->hasParameterOption('--keep=false')) {
+        } elseif ($input->hasParameterOption('--keep=false')) {
             $builder->setKeepOldTranslations(false);
         }
 

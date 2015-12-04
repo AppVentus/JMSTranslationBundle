@@ -22,20 +22,22 @@ final class ConfigBuilder
 {
     private $translationsDir;
     private $locale;
-    private $ignoredDomains = array();
-    private $domains = array();
+    private $ignoredDomains = [];
+    private $domains = [];
     private $outputFormat;
     private $defaultOutputFormat = 'xliff';
-    private $scanDirs = array();
-    private $excludedDirs = array('Tests');
-    private $excludedNames = array('*Test.php', '*TestCase.php');
-    private $enabledExtractors = array();
+    private $scanDirs = [];
+    private $excludedDirs = ['Tests'];
+    private $excludedNames = ['*Test.php', '*TestCase.php'];
+    private $enabledExtractors = [];
     private $keepOldTranslations = false;
-    private $loadResources = array();
+    private $loadResources = [];
 
     /**
      * @static
+     *
      * @param Config $config
+     *
      * @return ConfigBuilder
      */
     public static function fromConfig(Config $config)
@@ -57,14 +59,14 @@ final class ConfigBuilder
     }
 
     /**
-    * Sets the default output format.
-    *
-    * The default output format is used when the following conditions are met:
-    *   - there is no existing file for the given domain
-    *   - you haven't forced a format
-    *
-    * @param string $format
-    */
+     * Sets the default output format.
+     *
+     * The default output format is used when the following conditions are met:
+     *   - there is no existing file for the given domain
+     *   - you haven't forced a format
+     *
+     * @param string $format
+     */
     public function setDefaultOutputFormat($format)
     {
         $this->defaultOutputFormat = $format;
@@ -95,6 +97,7 @@ final class ConfigBuilder
      * appear in the change set calculated by getChangeSet().
      *
      * @param array $domains an array of the form array('domain' => true, 'another_domain' => true)
+     *
      * @return void
      */
     public function setIgnoredDomains(array $domains)

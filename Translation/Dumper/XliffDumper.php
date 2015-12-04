@@ -18,8 +18,8 @@
 
 namespace JMS\TranslationBundle\Translation\Dumper;
 
-use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\JMSTranslationBundle;
+use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 
 /**
@@ -28,6 +28,7 @@ use JMS\TranslationBundle\Model\MessageCatalogue;
  * This dumper uses version 1.2 of the specification.
  *
  * @see http://docs.oasis-open.org/xliff/v1.2/os/xliff-core.html
+ *
  * @author Johannes M. Schmitt <schmittjoh@gmail.com>
  */
 class XliffDumper implements DumperInterface
@@ -62,6 +63,7 @@ class XliffDumper implements DumperInterface
 
     /**
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $domain
+     *
      * @return string
      */
     public function dump(MessageCatalogue $catalogue, $domain = 'messages')
@@ -92,7 +94,6 @@ class XliffDumper implements DumperInterface
         $tool->setAttribute('tool-id', 'JMSTranslationBundle');
         $tool->setAttribute('tool-name', 'JMSTranslationBundle');
         $tool->setAttribute('tool-version', JMSTranslationBundle::VERSION);
-
 
         $header->appendChild($note = $doc->createElement('note'));
         $note->appendChild($doc->createTextNode('The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.'));
@@ -149,7 +150,6 @@ class XliffDumper implements DumperInterface
             if ($meaning = $message->getMeaning()) {
                 $unit->setAttribute('extradata', 'Meaning: '.$meaning);
             }
-
         }
 
         return $doc->saveXML();

@@ -24,6 +24,6 @@ class DefaultController
 
     public function indexAction()
     {
-        return /** @Desc("Foo") */ $this->translator->trans('controller.foo');
+        return /* @Desc("Foo") */ $this->translator->trans('controller.foo');
     }
 }

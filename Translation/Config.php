@@ -44,7 +44,6 @@ final class Config
     private $keepOldMessages;
     private $loadResources;
 
-
     public function __construct($translationsDir, $locale, array $ignoredDomains, array $domains, $outputFormat, $defaultOutputFormat, array $scanDirs, array $excludedDirs, array $excludedNames, array $enabledExtractors, $keepOldMessages, array $loadResources)
     {
         if (empty($translationsDir)) {
@@ -97,7 +96,8 @@ final class Config
 
     /**
      * @param $domain
-     * @return Boolean
+     *
+     * @return bool
      */
     public function isIgnoredDomain($domain)
     {
@@ -114,7 +114,8 @@ final class Config
 
     /**
      * @param $domain
-     * @return Boolean
+     *
+     * @return bool
      */
     public function hasDomain($domain)
     {
@@ -122,7 +123,7 @@ final class Config
     }
 
     /**
-     * @return Boolean
+     * @return bool
      */
     public function hasDomains()
     {
@@ -194,7 +195,7 @@ final class Config
     }
 
     /**
-     * @return Boolean
+     * @return bool
      */
     public function isKeepOldMessages()
     {

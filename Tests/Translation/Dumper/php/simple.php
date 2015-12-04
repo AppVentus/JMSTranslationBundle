@@ -1,4 +1,5 @@
 <?php
-return array(
+
+return [
     'foo' => 'foo', // FIXME
-);
+];

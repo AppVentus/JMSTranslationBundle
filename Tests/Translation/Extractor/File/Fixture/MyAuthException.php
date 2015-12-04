@@ -27,16 +27,16 @@ class MyAuthException extends AuthenticationException
     public function getMessageKey()
     {
         if (!empty($this->foo)) {
-            /** @Desc("%foo% is invalid.") */
+            /* @Desc("%foo% is invalid.") */
             return 'security.authentication_error.foo';
         }
 
-        /** @Desc("An authentication error occurred.") */
+        /* @Desc("An authentication error occurred.") */
         return 'security.authentication_error.bar';
     }
 
     public function getMessageParameters()
     {
-        return array('foo' => $foo);
+        return ['foo' => $foo];
     }
 }

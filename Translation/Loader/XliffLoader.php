@@ -19,9 +19,9 @@
 namespace JMS\TranslationBundle\Translation\Loader;
 
 use JMS\TranslationBundle\Exception\RuntimeException;
-use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
+use JMS\TranslationBundle\Model\MessageCatalogue;
 
 class XliffLoader implements LoaderInterface
 {
@@ -50,8 +50,7 @@ class XliffLoader implements LoaderInterface
 
             $m = Message::create($id, $domain)
                     ->setDesc((string) $trans->source)
-                    ->setLocaleString((string) $trans->target)
-            ;
+                    ->setLocaleString((string) $trans->target);
             $catalogue->add($m);
 
             if ($hasReferenceFiles) {
@@ -77,7 +76,6 @@ class XliffLoader implements LoaderInterface
             if (!($state = (string) $trans->target->attributes()->state) || 'new' !== $state) {
                 $m->setNew(false);
             }
-
         }
 
         return $catalogue;

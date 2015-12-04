@@ -21,7 +21,6 @@ namespace JMS\TranslationBundle\Translation;
 use JMS\TranslationBundle\Exception\InvalidArgumentException;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Util\FileUtils;
-use JMS\TranslationBundle\Translation\Loader\LoaderInterface;
 
 class LoaderManager
 {
@@ -40,6 +39,7 @@ class LoaderManager
      * @param $format
      * @param $locale
      * @param string $domain
+     *
      * @return mixed
      */
     public function loadFile($file, $format, $locale, $domain = 'messages')
@@ -50,6 +50,7 @@ class LoaderManager
     /**
      * @param $dir
      * @param $targetLocale
+     *
      * @return \JMS\TranslationBundle\Model\MessageCatalogue
      */
     public function loadFromDirectory($dir, $targetLocale)
@@ -68,7 +69,6 @@ class LoaderManager
                 list($format, $file) = $data;
 
                 $catalogue->merge($this->getLoader($format)->load($file, $locale, $domain));
-
             }
         }
 
@@ -77,8 +77,10 @@ class LoaderManager
 
     /**
      * @param $format
-     * @return mixed
+     *
      * @throws \InvalidArgumentException
+     *
+     * @return mixed
      * @return \JMS\TranslationBundle\Translation\Loader\LoaderInterface
      */
     protected function getLoader($format)

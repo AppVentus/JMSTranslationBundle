@@ -25,9 +25,9 @@ class FormModel implements TranslationContainerInterface
 {
     public static function getTranslationMessages()
     {
-        return array(
+        return [
             new Message('form.foo'),
             new Message('form.bar'),
-        );
+        ];
     }
 }

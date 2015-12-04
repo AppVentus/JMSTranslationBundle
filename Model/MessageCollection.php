@@ -32,7 +32,7 @@ use JMS\TranslationBundle\Exception\InvalidArgumentException;
 class MessageCollection
 {
     private $catalogue;
-    private $messages = array();
+    private $messages = [];
 
     public function setCatalogue(MessageCatalogue $catalogue)
     {
@@ -73,8 +73,10 @@ class MessageCollection
 
     /**
      * @param $id
-     * @return mixed
+     *
      * @throws \JMS\TranslationBundle\Exception\InvalidArgumentException
+     *
+     * @return mixed
      */
     public function get($id)
     {
@@ -87,7 +89,8 @@ class MessageCollection
 
     /**
      * @param $id
-     * @return Boolean
+     *
+     * @return bool
      */
     public function has($id)
     {
@@ -96,6 +99,7 @@ class MessageCollection
 
     /**
      * @param $callback
+     *
      * @throws \JMS\TranslationBundle\Exception\InvalidArgumentException
      */
     public function sort($callback)
@@ -109,6 +113,7 @@ class MessageCollection
 
     /**
      * @param $callback
+     *
      * @throws \JMS\TranslationBundle\Exception\InvalidArgumentException
      */
     public function filter($callback)

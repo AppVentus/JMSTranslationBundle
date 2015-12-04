@@ -36,26 +36,29 @@ abstract class FileUtils
      *    )
      *
      * @throws \RuntimeException
+     *
      * @return array
      */
     public static function findTranslationFiles($directory)
     {
-        $files = array();
+        $files = [];
         foreach (Finder::create()->in($directory)->depth('< 1')->files() as $file) {
             if (!preg_match('/^([^\.]+)\.([^\.]+)\.([^\.]+)$/', basename($file), $match)) {
                 continue;
             }
 
-            $files[$match[1]][$match[2]] = array(
+            $files[$match[1]][$match[2]] = [
                 $match[3],
-                $file
-            );
+                $file,
+            ];
         }
-        
+
         uksort($files, 'strcasecmp');
-        
+
         return $files;
     }
 
-    private final function __construct() { }
+    final private function __construct()
+    {
+    }
 }

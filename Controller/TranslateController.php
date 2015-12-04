@@ -18,13 +18,11 @@
 
 namespace JMS\TranslationBundle\Controller;
 
-use JMS\TranslationBundle\Exception\RuntimeException;
-use JMS\TranslationBundle\Exception\InvalidArgumentException;
-use JMS\TranslationBundle\Util\FileUtils;
 use JMS\DiExtraBundle\Annotation as DI;
+use JMS\TranslationBundle\Exception\RuntimeException;
+use JMS\TranslationBundle\Util\FileUtils;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\Translation\MessageCatalogue;
 
 /**
  * Translate Controller.
@@ -51,6 +49,7 @@ class TranslateController
     /**
      * @Route("/", name="jms_translation_index", options = {"i18n" = false})
      * @Template
+     *
      * @param string $config
      */
     public function indexAction()
@@ -74,9 +73,9 @@ class TranslateController
         }
 
         $locales = array_keys($files[$domain]);
-        
+
         natsort($locales);
-        
+
         if ((!$locale = $this->request->query->get('locale')) || !isset($files[$domain][$locale])) {
             $locale = reset($locales);
         }
@@ -91,7 +90,7 @@ class TranslateController
         // create alternative messages
         // TODO: We should probably also add these to the XLIFF file for external translators,
         //       and the specification already supports it
-        $alternativeMessages = array();
+        $alternativeMessages = [];
         foreach ($locales as $otherLocale) {
             if ($locale === $otherLocale) {
                 continue;
@@ -108,7 +107,7 @@ class TranslateController
             }
         }
 
-        $newMessages = $existingMessages = array();
+        $newMessages = $existingMessages = [];
         foreach ($catalogue->getDomain($domain)->all() as $id => $message) {
             if ($message->isNew()) {
                 $newMessages[$id] = $message;
@@ -118,20 +117,20 @@ class TranslateController
             $existingMessages[$id] = $message;
         }
 
-        return array(
-            'selectedConfig' => $config,
-            'configs' => $configs,
-            'selectedDomain' => $domain,
-            'domains' => $domains,
-            'selectedLocale' => $locale,
-            'locales' => $locales,
-            'format' => $files[$domain][$locale][0],
-            'newMessages' => $newMessages,
-            'existingMessages' => $existingMessages,
+        return [
+            'selectedConfig'      => $config,
+            'configs'             => $configs,
+            'selectedDomain'      => $domain,
+            'domains'             => $domains,
+            'selectedLocale'      => $locale,
+            'locales'             => $locales,
+            'format'              => $files[$domain][$locale][0],
+            'newMessages'         => $newMessages,
+            'existingMessages'    => $existingMessages,
             'alternativeMessages' => $alternativeMessages,
-            'isWriteable' => is_writeable($files[$domain][$locale][1]),
-            'file' => (string) $files[$domain][$locale][1],
-            'sourceLanguage' => $this->sourceLanguage,
-        );
+            'isWriteable'         => is_writable($files[$domain][$locale][1]),
+            'file'                => (string) $files[$domain][$locale][1],
+            'sourceLanguage'      => $this->sourceLanguage,
+        ];
     }
 }

@@ -1,8 +1,9 @@
 <?php
-return array(
-    'foo' => array(
-        'bar' => array(
+
+return [
+    'foo' => [
+        'bar' => [
             'baz' => 'foo.bar.baz', // FIXME
-        ),
-    ),
-);
+        ],
+    ],
+];
