@@ -18,30 +18,29 @@
 
 namespace JMS\TranslationBundle\Tests\Translation\Extractor;
 
-use Symfony\Component\HttpKernel\Log\NullLogger;
-use Doctrine\Common\Annotations\DocParser;
-use JMS\TranslationBundle\Translation\Extractor\File\FormExtractor;
 use Doctrine\Common\Annotations\AnnotationReader;
-use Symfony\Component\Validator\Mapping\Loader\AnnotationLoader;
-use Symfony\Component\Validator\Mapping\ClassMetadataFactory;
-use JMS\TranslationBundle\Translation\Extractor\File\ValidationExtractor;
+use Doctrine\Common\Annotations\DocParser;
 use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
-use JMS\TranslationBundle\Model\MessageCatalogue;
-use JMS\TranslationBundle\Translation\Extractor\File\TwigFileExtractor;
-use JMS\TranslationBundle\Translation\Extractor\File\TranslationContainerExtractor;
 use JMS\TranslationBundle\Translation\Extractor\File\DefaultPhpFileExtractor;
-use Symfony\Component\Translation\MessageSelector;
-use Symfony\Component\Translation\IdentityTranslator;
-use Symfony\Bridge\Twig\Extension\TranslationExtension as SymfonyTranslationExtension;
-use JMS\TranslationBundle\Twig\TranslationExtension;
+use JMS\TranslationBundle\Translation\Extractor\File\FormExtractor;
+use JMS\TranslationBundle\Translation\Extractor\File\TranslationContainerExtractor;
+use JMS\TranslationBundle\Translation\Extractor\File\TwigFileExtractor;
+use JMS\TranslationBundle\Translation\Extractor\File\ValidationExtractor;
 use JMS\TranslationBundle\Translation\Extractor\FileExtractor;
+use JMS\TranslationBundle\Twig\TranslationExtension;
+use Symfony\Bridge\Twig\Extension\TranslationExtension as SymfonyTranslationExtension;
+use Symfony\Component\HttpKernel\Log\NullLogger;
+use Symfony\Component\Translation\IdentityTranslator;
+use Symfony\Component\Translation\MessageSelector;
+use Symfony\Component\Validator\Mapping\ClassMetadataFactory;
+use Symfony\Component\Validator\Mapping\Loader\AnnotationLoader;
 
 class FileExtractorTest extends \PHPUnit_Framework_TestCase
 {
     public function testExtractWithSimpleTestFixtures()
     {
-        $expected = array();
+        $expected = [];
         $basePath = __DIR__.'/Fixture/SimpleTest/';
 
         // Controller
@@ -55,7 +54,7 @@ class FileExtractorTest extends \PHPUnit_Framework_TestCase
         $expected['form.bar'] = new Message('form.bar');
 
         // Templates
-        foreach (array('php', 'twig') as $engine) {
+        foreach (['php', 'twig'] as $engine) {
             $message = new Message($engine.'.foo');
             $message->addSource(new FileSource($basePath.'Resources/views/'.$engine.'_template.html.'.$engine, 1));
             $expected[$engine.'.foo'] = $message;
@@ -90,26 +89,26 @@ class FileExtractorTest extends \PHPUnit_Framework_TestCase
         $twig = new \Twig_Environment();
         $twig->addExtension(new SymfonyTranslationExtension($translator = new IdentityTranslator(new MessageSelector())));
         $twig->addExtension(new TranslationExtension($translator));
-        $loader=new \Twig_Loader_Filesystem(realpath(__DIR__."/Fixture/SimpleTest/Resources/views/"));
+        $loader = new \Twig_Loader_Filesystem(realpath(__DIR__.'/Fixture/SimpleTest/Resources/views/'));
         $twig->setLoader($loader);
 
         $docParser = new DocParser();
-        $docParser->setImports(array(
-                        'desc' => 'JMS\TranslationBundle\Annotation\Desc',
+        $docParser->setImports([
+                        'desc'    => 'JMS\TranslationBundle\Annotation\Desc',
                         'meaning' => 'JMS\TranslationBundle\Annotation\Meaning',
-                        'ignore' => 'JMS\TranslationBundle\Annotation\Ignore',
-        ));
+                        'ignore'  => 'JMS\TranslationBundle\Annotation\Ignore',
+        ]);
         $docParser->setIgnoreNotImportedAnnotations(true);
 
         $factory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
 
-        $extractor = new FileExtractor($twig, new NullLogger(), array(
+        $extractor = new FileExtractor($twig, new NullLogger(), [
             new DefaultPhpFileExtractor($docParser),
             new TranslationContainerExtractor(),
             new TwigFileExtractor($twig),
             new ValidationExtractor($factory),
             new FormExtractor($docParser),
-        ));
+        ]);
         $extractor->setDirectory($directory);
 
         return $extractor->extract();

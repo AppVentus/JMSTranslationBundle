@@ -18,14 +18,14 @@
 
 namespace JMS\TranslationBundle\Tests\Twig;
 
-use Symfony\Component\Translation\MessageSelector;
-use Symfony\Component\Translation\IdentityTranslator;
-use Symfony\Bridge\Twig\Extension\TranslationExtension as SymfonyTranslationExtension;
 use JMS\TranslationBundle\Twig\TranslationExtension;
+use Symfony\Bridge\Twig\Extension\TranslationExtension as SymfonyTranslationExtension;
+use Symfony\Component\Translation\IdentityTranslator;
+use Symfony\Component\Translation\MessageSelector;
 
 abstract class BaseTwigTestCase extends \PHPUnit_Framework_TestCase
 {
-    protected final function parse($file, $debug = false)
+    final protected function parse($file, $debug = false)
     {
         $content = file_get_contents(__DIR__.'/Fixture/'.$file);
 

@@ -18,9 +18,9 @@
 
 namespace JMS\TranslationBundle\Tests\Model;
 
+use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCollection;
-use JMS\TranslationBundle\Model\FileSource;
 
 class MessageCollectionTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,7 +29,7 @@ class MessageCollectionTest extends \PHPUnit_Framework_TestCase
         $domain = new MessageCollection();
         $domain->add($m = new Message('foo'));
 
-        $this->assertSame(array('foo' => $m), $domain->all());
+        $this->assertSame(['foo' => $m], $domain->all());
     }
 
     public function testAddMerges()
@@ -109,10 +109,10 @@ class MessageCollectionTest extends \PHPUnit_Framework_TestCase
         $col->add(new Message('c'));
         $col->add(new Message('a'));
 
-        $this->assertEquals(array('b', 'c', 'a'), array_keys($col->all()));
+        $this->assertEquals(['b', 'c', 'a'], array_keys($col->all()));
 
         $col->sort('strcasecmp');
-        $this->assertEquals(array('a', 'b', 'c'), array_keys($col->all()));
+        $this->assertEquals(['a', 'b', 'c'], array_keys($col->all()));
     }
 
     public function testFilter()
@@ -121,9 +121,9 @@ class MessageCollectionTest extends \PHPUnit_Framework_TestCase
         $col->add($m = new Message('a'));
         $col->add(new Message('b'));
         $col->add(new Message('c'));
-        $col->filter(function($v) { return 'a' === $v->getId(); });
+        $col->filter(function ($v) { return 'a' === $v->getId(); });
 
-        $this->assertEquals(array('a'), array_keys($col->all()));
+        $this->assertEquals(['a'], array_keys($col->all()));
         $this->assertSame($m, $col->get('a'));
     }
 
@@ -136,7 +136,7 @@ class MessageCollectionTest extends \PHPUnit_Framework_TestCase
         $col2->add(new Message('b'));
 
         $col->merge($col2);
-        $this->assertEquals(array('a', 'b'), array_keys($col->all()));
+        $this->assertEquals(['a', 'b'], array_keys($col->all()));
     }
 
     /**
@@ -266,5 +266,4 @@ class MessageCollectionTest extends \PHPUnit_Framework_TestCase
         $col->set($msg);
         $col->set($msg2);
     }
-
 }

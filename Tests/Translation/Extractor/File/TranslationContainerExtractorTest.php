@@ -21,8 +21,8 @@ namespace JMS\TranslationBundle\Tests\Translation\Extractor\File;
 use JMS\TranslationBundle\Exception\RuntimeException;
 use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
-use JMS\TranslationBundle\Translation\Extractor\File\TranslationContainerExtractor;
 use JMS\TranslationBundle\Model\MessageCatalogue;
+use JMS\TranslationBundle\Translation\Extractor\File\TranslationContainerExtractor;
 
 class TranslationContainerExtractorTest extends \PHPUnit_Framework_TestCase
 {

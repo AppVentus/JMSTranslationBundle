@@ -37,7 +37,7 @@ class FileWriter
     /**
      * @param array $dumpers
      */
-    public function __construct(array $dumpers = array())
+    public function __construct(array $dumpers = [])
     {
         $this->dumpers = $dumpers;
     }
@@ -46,6 +46,7 @@ class FileWriter
      * @param \JMS\TranslationBundle\Model\MessageCatalogue $domain
      * @param $filePath
      * @param $format
+     *
      * @throws \JMS\TranslationBundle\Exception\InvalidArgumentException
      */
     public function write(MessageCatalogue $catalogue, $domain, $filePath, $format)
@@ -55,7 +56,7 @@ class FileWriter
         }
 
         // sort messages before dumping
-        $catalogue->getDomain($domain)->sort(function($a, $b) {
+        $catalogue->getDomain($domain)->sort(function ($a, $b) {
             return strcmp($a->getId(), $b->getId());
         });
 

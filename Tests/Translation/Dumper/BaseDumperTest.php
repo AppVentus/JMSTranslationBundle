@@ -18,9 +18,9 @@
 
 namespace JMS\TranslationBundle\Tests\Translation\Dumper;
 
-use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
+use JMS\TranslationBundle\Model\MessageCatalogue;
 
 abstract class BaseDumperTest extends \PHPUnit_Framework_TestCase
 {
@@ -81,6 +81,7 @@ abstract class BaseDumperTest extends \PHPUnit_Framework_TestCase
     }
 
     abstract protected function getDumper();
+
     abstract protected function getOutput($key);
 
     private function dump(MessageCatalogue $catalogue, $domain)

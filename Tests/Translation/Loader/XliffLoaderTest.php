@@ -20,7 +20,6 @@ namespace JMS\TranslationBundle\Tests\Translation\Loader;
 
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
-
 use JMS\TranslationBundle\Translation\Dumper\XliffDumper;
 use JMS\TranslationBundle\Translation\Loader\XliffLoader;
 
@@ -63,11 +62,11 @@ class XliffLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function getTestFiles()
     {
-        $files = array();
-        $files[] = array(__DIR__.'/../Dumper/xliff/simple.xml');
-        $files[] = array(__DIR__.'/../Dumper/xliff/structure_with_metadata.xml');
-        $files[] = array(__DIR__.'/../Dumper/xliff/structure.xml');
-        $files[] = array(__DIR__.'/../Dumper/xliff/with_metadata.xml');
+        $files = [];
+        $files[] = [__DIR__.'/../Dumper/xliff/simple.xml'];
+        $files[] = [__DIR__.'/../Dumper/xliff/structure_with_metadata.xml'];
+        $files[] = [__DIR__.'/../Dumper/xliff/structure.xml'];
+        $files[] = [__DIR__.'/../Dumper/xliff/with_metadata.xml'];
 
         return $files;
     }

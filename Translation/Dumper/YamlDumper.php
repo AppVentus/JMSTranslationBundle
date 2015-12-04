@@ -18,8 +18,8 @@
 
 namespace JMS\TranslationBundle\Translation\Dumper;
 
-use JMS\TranslationBundle\Util\Writer;
 use JMS\TranslationBundle\Model\Message;
+use JMS\TranslationBundle\Util\Writer;
 use Symfony\Component\Yaml\Inline;
 
 class YamlDumper extends ArrayStructureDumper
@@ -53,13 +53,13 @@ class YamlDumper extends ArrayStructureDumper
                 }
 
                 if ($desc) {
-                    $desc = str_replace(array("\r\n", "\n", "\r", "\t"), array('\r\n', '\n', '\r', '\t'), $desc);
+                    $desc = str_replace(["\r\n", "\n", "\r", "\t"], ['\r\n', '\n', '\r', '\t'], $desc);
                     $this->writer->writeln('# Desc: '.$desc);
                 }
                 if ($meaning) {
                     $this->writer->writeln('# Meaning: '.$meaning);
                 }
-            } else if (!$isFirst) {
+            } elseif (!$isFirst) {
                 $this->writer->write("\n");
             }
 

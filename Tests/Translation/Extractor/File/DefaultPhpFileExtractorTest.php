@@ -18,7 +18,6 @@
 
 namespace JMS\TranslationBundle\Tests\Translation\Extractor\File;
 
-use JMS\TranslationBundle\Exception\RuntimeException;
 use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;

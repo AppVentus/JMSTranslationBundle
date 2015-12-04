@@ -1,6 +1,7 @@
 <?php
-return array(
+
+return [
     // Desc: bar
     // Meaning: baz
     'foo' => 'bar', // FIXME
-);
+];

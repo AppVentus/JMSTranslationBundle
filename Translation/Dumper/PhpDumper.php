@@ -36,8 +36,7 @@ class PhpDumper extends ArrayStructureDumper
             ->reset()
             ->writeln('<?php')
             ->writeln('return array(')
-            ->indent()
-        ;
+            ->indent();
 
         $this->dumpStructureRecursively($structure);
 
@@ -63,7 +62,7 @@ class PhpDumper extends ArrayStructureDumper
                 if ($meaning) {
                     $this->writer->writeln('// Meaning: '.$meaning);
                 }
-            } else if (!$isFirst) {
+            } elseif (!$isFirst) {
                 $this->writer->write("\n");
             }
 
@@ -85,15 +84,13 @@ class PhpDumper extends ArrayStructureDumper
 
             $this->writer
                 ->write("array(\n")
-                ->indent()
-            ;
+                ->indent();
 
             $this->dumpStructureRecursively($v);
 
             $this->writer
                 ->outdent()
-                ->writeln('),')
-            ;
+                ->writeln('),');
         }
     }
 }

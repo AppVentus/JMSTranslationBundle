@@ -18,11 +18,9 @@
 
 namespace JMS\TranslationBundle\Tests\Translation\Dumper;
 
-use JMS\TranslationBundle\Model\Message;
-
-use JMS\TranslationBundle\Model\MessageCatalogue;
-
 use JMS\TranslationBundle\Exception\InvalidArgumentException;
+use JMS\TranslationBundle\Model\Message;
+use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Dumper\XliffDumper;
 
 class XliffDumperTest extends BaseDumperTest

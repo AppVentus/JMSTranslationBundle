@@ -20,6 +20,7 @@ namespace JMS\TranslationBundle\Model;
 
 interface SourceInterface
 {
-    function equals(SourceInterface $source);
-    function __toString();
+    public function equals(SourceInterface $source);
+
+    public function __toString();
 }

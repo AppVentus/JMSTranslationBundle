@@ -51,7 +51,7 @@ class FileSource implements SourceInterface
 
     public function equals(SourceInterface $source)
     {
-        if (!$source instanceof FileSource) {
+        if (!$source instanceof self) {
             return false;
         }
 

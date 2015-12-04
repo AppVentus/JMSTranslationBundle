@@ -18,8 +18,8 @@
 
 namespace JMS\TranslationBundle\Translation\Loader;
 
-use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Model\Message;
+use JMS\TranslationBundle\Model\MessageCatalogue;
 use Symfony\Component\Translation\Loader\LoaderInterface as SymfonyLoader;
 
 /**
@@ -42,9 +42,10 @@ class SymfonyLoaderAdapter implements LoaderInterface
      * Converts Symfony's message catalogue to the catalogue of this
      * bundle.
      *
-     * @param mixed $resource
+     * @param mixed  $resource
      * @param string $locale
      * @param string $domain
+     *
      * @return MessageCatalogue
      */
     public function load($resource, $locale, $domain = 'messages')

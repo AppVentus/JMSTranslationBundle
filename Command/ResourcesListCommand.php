@@ -18,19 +18,11 @@
 
 namespace JMS\TranslationBundle\Command;
 
-use JMS\TranslationBundle\Translation\ConfigBuilder;
-use JMS\TranslationBundle\Exception\RuntimeException;
-use JMS\TranslationBundle\Translation\Config;
-use JMS\TranslationBundle\Logger\OutputLogger;
-
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Finder\Finder;
 use JMS\TranslationBundle\Util\FileUtils;
-
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @author Fabien Potencier <fabien@symfony.com>
@@ -43,13 +35,13 @@ class ResourcesListCommand extends ContainerAwareCommand
         $this
             ->setName('translation:list-resources')
             ->setDescription('List translation resources available.')
-            ->addOption('files', null, InputOption::VALUE_OPTIONAL, 'Display only files')
-        ;
+            ->addOption('files', null, InputOption::VALUE_OPTIONAL, 'Display only files');
     }
 
     /**
-     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Input\InputInterface   $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
      * @return mixed
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -86,14 +78,15 @@ class ResourcesListCommand extends ContainerAwareCommand
 
     /**
      * @param array $dirs
+     *
      * @return array
      */
     private function retrieveFiles(array $dirs)
     {
-        $files = array();
+        $files = [];
         // Register translation resources
         foreach ($dirs as $dir) {
-            foreach(FileUtils::findTranslationFiles($dir) as $catalogue => $locales) {
+            foreach (FileUtils::findTranslationFiles($dir) as $catalogue => $locales) {
                 foreach ($locales as $file) {
                     $files[] = $file[1];
                 }
@@ -104,14 +97,14 @@ class ResourcesListCommand extends ContainerAwareCommand
     }
 
     /**
-     * The following methods is derived from code of the FrameworkExtension.php file from the Symfony2 framework
+     * The following methods is derived from code of the FrameworkExtension.php file from the Symfony2 framework.
      *
      * @return array
      */
     private function retrieveDirs()
     {
         // Discover translation directories
-        $dirs = array();
+        $dirs = [];
         foreach ($this->getContainer()->getParameter('kernel.bundles') as $bundle) {
             $reflection = new \ReflectionClass($bundle);
             if (is_dir($dir = dirname($reflection->getFilename()).'/Resources/translations')) {

@@ -20,7 +20,6 @@ namespace JMS\TranslationBundle\Translation\Extractor\File;
 
 use JMS\TranslationBundle\Exception\RuntimeException;
 use JMS\TranslationBundle\Model\Message;
-
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
 
@@ -38,7 +37,7 @@ class TranslationContainerExtractor implements FileVisitorInterface, \PHPParser_
     private $file;
     private $catalogue;
     private $namespace = '';
-    private $useStatements = array();
+    private $useStatements = [];
 
     public function __construct()
     {
@@ -50,7 +49,7 @@ class TranslationContainerExtractor implements FileVisitorInterface, \PHPParser_
     {
         if ($node instanceof \PHPParser_Node_Stmt_Namespace) {
             $this->namespace = implode('\\', $node->name->parts);
-            $this->useStatements = array();
+            $this->useStatements = [];
 
             return;
         }
@@ -82,7 +81,7 @@ class TranslationContainerExtractor implements FileVisitorInterface, \PHPParser_
             return;
         }
 
-        $messages = call_user_func(array($this->namespace.'\\'.$node->name, 'getTranslationMessages'));
+        $messages = call_user_func([$this->namespace.'\\'.$node->name, 'getTranslationMessages']);
         if (!is_array($messages)) {
             throw new RuntimeException(sprintf('%s::getTranslationMessages() was expected to return an array of messages, but got %s.', $this->namespace.'\\'.$node->name, gettype($messages)));
         }
@@ -103,9 +102,23 @@ class TranslationContainerExtractor implements FileVisitorInterface, \PHPParser_
         $this->traverser->traverse($ast);
     }
 
-    public function beforeTraverse(array $nodes) { }
-    public function leaveNode(\PHPParser_Node $node) { }
-    public function afterTraverse(array $nodes) { }
-    public function visitFile(\SplFileInfo $file, MessageCatalogue $catalogue) { }
-    public function visitTwigFile(\SplFileInfo $file, MessageCatalogue $catalogue, \Twig_Node $ast) { }
+    public function beforeTraverse(array $nodes)
+    {
+    }
+
+    public function leaveNode(\PHPParser_Node $node)
+    {
+    }
+
+    public function afterTraverse(array $nodes)
+    {
+    }
+
+    public function visitFile(\SplFileInfo $file, MessageCatalogue $catalogue)
+    {
+    }
+
+    public function visitTwigFile(\SplFileInfo $file, MessageCatalogue $catalogue, \Twig_Node $ast)
+    {
+    }
 }

@@ -20,8 +20,8 @@ namespace JMS\TranslationBundle\Translation\Loader\Symfony;
 
 use JMS\TranslationBundle\Exception\RuntimeException;
 use Symfony\Component\Config\Resource\FileResource;
-use Symfony\Component\Translation\MessageCatalogue;
 use Symfony\Component\Translation\Loader\LoaderInterface;
+use Symfony\Component\Translation\MessageCatalogue;
 
 /**
  * XLIFF loader.
@@ -35,8 +35,8 @@ use Symfony\Component\Translation\Loader\LoaderInterface;
 class XliffLoader implements LoaderInterface
 {
     /**
-    * {@inheritdoc}
-    */
+     * {@inheritdoc}
+     */
     public function load($resource, $locale, $domain = 'messages')
     {
         $previous = libxml_use_internal_errors(true);

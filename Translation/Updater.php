@@ -18,17 +18,13 @@
 
 namespace JMS\TranslationBundle\Translation;
 
-use JMS\TranslationBundle\Util\FileUtils;
 use JMS\TranslationBundle\Exception\RuntimeException;
-use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Model\Message;
+use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Comparison\CatalogueComparator;
-
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
-use Symfony\Component\Translation\MessageCatalogue as SymfonyMessageCatalogue;
+use JMS\TranslationBundle\Util\FileUtils;
 use Symfony\Component\Finder\Finder;
-use Symfony\Bundle\FrameworkBundle\Translation\TranslationLoader;
-use Symfony\Component\Translation\Loader\LoaderInterface;
+use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 /**
  * Wrapper around the different components.
@@ -54,10 +50,10 @@ class Updater
     private $writer;
 
     /**
-     * @param LoaderManager $loader
-     * @param ExtractorManager $extractor
+     * @param LoaderManager                                     $loader
+     * @param ExtractorManager                                  $extractor
      * @param \Symfony\Component\HttpKernel\Log\LoggerInterface $logger
-     * @param FileWriter $writer
+     * @param FileWriter                                        $writer
      */
     public function __construct(LoaderManager $loader, ExtractorManager $extractor, LoggerInterface $logger, FileWriter $writer)
     {
@@ -78,6 +74,7 @@ class Updater
 
     /**
      * @param Config $config
+     *
      * @return \JMS\CommandBundle\Translation\ComparisonResult
      */
     public function getChangeSet(Config $config)
@@ -105,8 +102,7 @@ class Updater
         $catalogue
             ->get($id, $domain)
             ->setLocaleString($trans)
-            ->setNew(false)
-        ;
+            ->setNew(false);
 
         $this->writer->write($catalogue, $domain, $file, $format);
     }
@@ -158,7 +154,9 @@ class Updater
      * Detects the most suitable output format to use.
      *
      * @param string $domain
+     *
      * @throws \RuntimeException
+     *
      * @return string the output format
      */
     private function detectOutputFormat($currentDomain)
@@ -171,7 +169,7 @@ class Updater
         $otherDomainFormat = $localeFormat = $otherLocaleFormat = null;
         foreach (FileUtils::findTranslationFiles($this->config->getTranslationsDir()) as $domain => $locales) {
             foreach ($locales as $locale => $fileData) {
-                list($format, ) = $fileData;
+                list($format) = $fileData;
 
                 if ($currentDomain !== $domain) {
                     $otherDomainFormat = $format;
@@ -209,7 +207,7 @@ class Updater
     {
         $this->config = $config;
 
-        $this->logger->info(sprintf("Loading catalogues from \"%s\"", $config->getTranslationsDir()));
+        $this->logger->info(sprintf('Loading catalogues from "%s"', $config->getTranslationsDir()));
         $this->existingCatalogue = new MessageCatalogue();
 
         // load external resources, so current translations can be reused in the final translation
@@ -230,7 +228,7 @@ class Updater
         $this->extractor->setExcludedNames($config->getExcludedNames());
         $this->extractor->setEnabledExtractors($config->getEnabledExtractors());
 
-        $this->logger->info("Extracting translation keys");
+        $this->logger->info('Extracting translation keys');
         $this->scannedCatalogue = $this->extractor->extract();
         $this->scannedCatalogue->setLocale($config->getLocale());
 

@@ -19,10 +19,10 @@
 namespace JMS\TranslationBundle\Translation\Extractor\File;
 
 use JMS\TranslationBundle\Model\Message;
-use Symfony\Component\Validator\Mapping\ClassMetadataFactoryInterface;
-use Symfony\Component\Validator\MetadataFactoryInterface;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
+use Symfony\Component\Validator\Mapping\ClassMetadataFactoryInterface;
+use Symfony\Component\Validator\MetadataFactoryInterface;
 
 /**
  * Extracts translations validation constraints.
@@ -39,7 +39,7 @@ class ValidationExtractor implements FileVisitorInterface, \PHPParser_NodeVisito
 
     public function __construct($metadataFactory)
     {
-        if (! ($metadataFactory instanceOf MetadataFactoryInterface || $metadataFactory instanceOf ClassMetadataFactoryInterface) ) {
+        if (!($metadataFactory instanceof MetadataFactoryInterface || $metadataFactory instanceof ClassMetadataFactoryInterface)) {
             throw new \InvalidArgumentException(sprintf('%s expects an instance of MetadataFactoryInterface or ClassMetadataFactoryInterface', get_class($this)));
         }
         $this->metadataFactory = $metadataFactory;
@@ -66,7 +66,7 @@ class ValidationExtractor implements FileVisitorInterface, \PHPParser_NodeVisito
             return;
         }
 
-        $metadata = ($this->metadataFactory instanceOf ClassMetadataFactoryInterface)? $this->metadataFactory->getClassMetadata($name) : $this->metadataFactory->getMetadataFor($name);
+        $metadata = ($this->metadataFactory instanceof ClassMetadataFactoryInterface) ? $this->metadataFactory->getClassMetadata($name) : $this->metadataFactory->getMetadataFor($name);
         if (!$metadata->hasConstraints() && !count($metadata->getConstrainedProperties())) {
             return;
         }
@@ -87,11 +87,25 @@ class ValidationExtractor implements FileVisitorInterface, \PHPParser_NodeVisito
         $this->traverser->traverse($ast);
     }
 
-    public function beforeTraverse(array $nodes) { }
-    public function leaveNode(\PHPParser_Node $node) { }
-    public function afterTraverse(array $nodes) { }
-    public function visitFile(\SplFileInfo $file, MessageCatalogue $catalogue) { }
-    public function visitTwigFile(\SplFileInfo $file, MessageCatalogue $catalogue, \Twig_Node $ast) { }
+    public function beforeTraverse(array $nodes)
+    {
+    }
+
+    public function leaveNode(\PHPParser_Node $node)
+    {
+    }
+
+    public function afterTraverse(array $nodes)
+    {
+    }
+
+    public function visitFile(\SplFileInfo $file, MessageCatalogue $catalogue)
+    {
+    }
+
+    public function visitTwigFile(\SplFileInfo $file, MessageCatalogue $catalogue, \Twig_Node $ast)
+    {
+    }
 
     private function extractFromConstraints(array $constraints)
     {

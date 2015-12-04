@@ -32,14 +32,13 @@ class FileWriterTest extends \PHPUnit_Framework_TestCase
         $dumper
             ->expects($this->once())
             ->method('dump')
-            ->will($this->returnCallback(function($v) use($self) {
-                $self->assertEquals(array('foo.bar', 'foo.bar.baz'), array_keys($v->getDomain('messages')->all()));
-            }))
-        ;
+            ->will($this->returnCallback(function ($v) use ($self) {
+                $self->assertEquals(['foo.bar', 'foo.bar.baz'], array_keys($v->getDomain('messages')->all()));
+            }));
 
-        $writer = new FileWriter(array(
+        $writer = new FileWriter([
             'test' => $dumper,
-        ));
+        ]);
 
         $catalogue = new MessageCatalogue();
         $catalogue->setLocale('fr');

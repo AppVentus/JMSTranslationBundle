@@ -23,15 +23,15 @@ use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class OutputLogger implements LoggerInterface
 {
-    const EMERG  = 1;
-    const ALERT  = 2;
-    const CRIT   = 4;
-    const ERR    = 8;
-    const WARN   = 16;
+    const EMERG = 1;
+    const ALERT = 2;
+    const CRIT = 4;
+    const ERR = 8;
+    const WARN = 16;
     const NOTICE = 32;
-    const INFO   = 64;
-    const DEBUG  = 128;
-    const ALL    = 255;
+    const INFO = 64;
+    const DEBUG = 128;
+    const ALL = 255;
 
     private $output;
     private $level = self::ALL;
@@ -46,12 +46,12 @@ class OutputLogger implements LoggerInterface
         $this->level = $level;
     }
 
-    public function emergency($message, array $context = array())
+    public function emergency($message, array $context = [])
     {
         return $this->emerg($message, $context);
     }
 
-    public function emerg($message, array $context = array())
+    public function emerg($message, array $context = [])
     {
         if (0 === ($this->level & self::EMERG)) {
             return;
@@ -60,7 +60,7 @@ class OutputLogger implements LoggerInterface
         $this->output->writeln('<error>'.$message.'</error>');
     }
 
-    public function alert($message, array $context = array())
+    public function alert($message, array $context = [])
     {
         if (0 === ($this->level & self::ALERT)) {
             return;
@@ -69,12 +69,12 @@ class OutputLogger implements LoggerInterface
         $this->output->writeln('<error>'.$message.'</error>');
     }
 
-    public function critical($message, array $context = array())
+    public function critical($message, array $context = [])
     {
         return $this->crit($message, $context);
     }
 
-    public function crit($message, array $context = array())
+    public function crit($message, array $context = [])
     {
         if (0 === ($this->level & self::CRIT)) {
             return;
@@ -83,12 +83,12 @@ class OutputLogger implements LoggerInterface
         $this->output->writeln('<error>'.$message.'</error>');
     }
 
-    public function error($message, array $context = array())
+    public function error($message, array $context = [])
     {
         return $this->err($message, $context);
     }
 
-    public function err($message, array $context = array())
+    public function err($message, array $context = [])
     {
         if (0 === ($this->level & self::ERR)) {
             return;
@@ -97,12 +97,12 @@ class OutputLogger implements LoggerInterface
         $this->output->writeln('<error>'.$message.'</error>');
     }
 
-    public function warning($message, array $context = array())
+    public function warning($message, array $context = [])
     {
         return $this->warn($message, $context);
     }
 
-    public function warn($message, array $context = array())
+    public function warn($message, array $context = [])
     {
         if (0 === ($this->level & self::WARN)) {
             return;
@@ -111,7 +111,7 @@ class OutputLogger implements LoggerInterface
         $this->output->writeln($message);
     }
 
-    public function notice($message, array $context = array())
+    public function notice($message, array $context = [])
     {
         if (0 === ($this->level & self::NOTICE)) {
             return;
@@ -120,7 +120,7 @@ class OutputLogger implements LoggerInterface
         $this->output->writeln($message);
     }
 
-    public function info($message, array $context = array())
+    public function info($message, array $context = [])
     {
         if (0 === ($this->level & self::INFO)) {
             return;
@@ -129,7 +129,7 @@ class OutputLogger implements LoggerInterface
         $this->output->writeln($message);
     }
 
-    public function debug($message, array $context = array())
+    public function debug($message, array $context = [])
     {
         if (0 === ($this->level & self::DEBUG)) {
             return;
@@ -138,7 +138,7 @@ class OutputLogger implements LoggerInterface
         $this->output->writeln($message);
     }
 
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = [])
     {
         if (0 === ($this->level & $level)) {
             return;

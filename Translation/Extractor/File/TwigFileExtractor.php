@@ -19,24 +19,23 @@
 namespace JMS\TranslationBundle\Translation\Extractor\File;
 
 use JMS\TranslationBundle\Exception\RuntimeException;
-use Symfony\Bridge\Twig\Node\TransNode;
-
 use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
+use Symfony\Bridge\Twig\Node\TransNode;
 
 class TwigFileExtractor implements FileVisitorInterface, \Twig_NodeVisitorInterface
 {
     private $file;
     private $catalogue;
     private $traverser;
-    private $stack = array();
+    private $stack = [];
     private $stackCount = 0;
 
     public function __construct(\Twig_Environment $env)
     {
-        $this->traverser = new \Twig_NodeTraverser($env, array($this));
+        $this->traverser = new \Twig_NodeTraverser($env, [$this]);
     }
 
     public function enterNode(\Twig_NodeInterface $node, \Twig_Environment $env)
@@ -53,7 +52,7 @@ class TwigFileExtractor implements FileVisitorInterface, \Twig_NodeVisitorInterf
             $message = new Message($id, $domain);
             $message->addSource(new FileSource((string) $this->file, $node->getLine()));
             $this->catalogue->add($message);
-        } else if ($node instanceof \Twig_Node_Expression_Filter) {
+        } elseif ($node instanceof \Twig_Node_Expression_Filter) {
             $name = $node->getNode('filter')->getAttribute('value');
 
             if ('trans' === $name || 'transchoice' === $name) {
@@ -82,7 +81,7 @@ class TwigFileExtractor implements FileVisitorInterface, \Twig_NodeVisitorInterf
                 $message = new Message($id, $domain);
                 $message->addSource(new FileSource((string) $this->file, $node->getLine()));
 
-                for ($i=count($this->stack)-2; $i>=0; $i-=1) {
+                for ($i = count($this->stack) - 2; $i >= 0; $i -= 1) {
                     if (!$this->stack[$i] instanceof \Twig_Node_Expression_Filter) {
                         break;
                     }
@@ -100,7 +99,7 @@ class TwigFileExtractor implements FileVisitorInterface, \Twig_NodeVisitorInterf
                         }
 
                         $message->{'set'.$name}($text->getAttribute('value'));
-                    } else if ('trans' === $name) {
+                    } elseif ('trans' === $name) {
                         break;
                     }
                 }
@@ -124,7 +123,7 @@ class TwigFileExtractor implements FileVisitorInterface, \Twig_NodeVisitorInterf
         $this->traverser->traverse($ast);
         $this->traverseEmbeddedTemplates($ast);
     }
-    
+
     /**
      * If the current Twig Node has embedded templates, we want to travese these templates
      * in the same manner as we do the main twig template to ensure all translations are 
@@ -135,8 +134,8 @@ class TwigFileExtractor implements FileVisitorInterface, \Twig_NodeVisitorInterf
     private function traverseEmbeddedTemplates(\Twig_Node $node)
     {
         $templates = $node->getAttribute('embedded_templates');
-        
-        foreach($templates as $template) {
+
+        foreach ($templates as $template) {
             $this->traverser->traverse($template);
             if ($template->hasAttribute('embedded_templates')) {
                 $this->traverseEmbeddedTemplates($template);
@@ -151,6 +150,11 @@ class TwigFileExtractor implements FileVisitorInterface, \Twig_NodeVisitorInterf
         return $node;
     }
 
-    public function visitFile(\SplFileInfo $file, MessageCatalogue $catalogue) { }
-    public function visitPhpFile(\SplFileInfo $file, MessageCatalogue $catalogue, array $ast) { }
+    public function visitFile(\SplFileInfo $file, MessageCatalogue $catalogue)
+    {
+    }
+
+    public function visitPhpFile(\SplFileInfo $file, MessageCatalogue $catalogue, array $ast)
+    {
+    }
 }

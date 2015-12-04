@@ -1,14 +1,15 @@
 <?php
-return array(
-    'foo' => array(
-        'bar' => array(
+
+return [
+    'foo' => [
+        'bar' => [
             // Desc: Foo
             'baz' => 'Foo', // FIXME
 
             // Meaning: Bar
             'moo' => 'foo.bar.moo', // FIXME
-        ),
+        ],
 
         'baz' => 'foo.baz', // FIXME
-    ),
-);
+    ],
+];

@@ -34,7 +34,7 @@ class Writer
     public $content = '';
     public $changeCount = 0;
 
-    private $changes = array();
+    private $changes = [];
 
     public function indent()
     {
@@ -64,7 +64,7 @@ class Writer
     public function revert()
     {
         $change = array_pop($this->changes);
-        $this->changeCount -=1 ;
+        $this->changeCount -= 1;
         $this->content = substr($this->content, 0, -1 * strlen($change));
     }
 
@@ -74,7 +74,7 @@ class Writer
         $addition = '';
 
         $lines = explode("\n", $content);
-        for ($i=0,$c=count($lines); $i<$c; $i++) {
+        for ($i = 0, $c = count($lines); $i < $c; $i++) {
             if ($this->indentationLevel > 0
                 && !empty($lines[$i])
                 && ((empty($addition) && "\n" === substr($this->content, -1)) || "\n" === substr($addition, -1))) {
@@ -83,7 +83,7 @@ class Writer
 
             $addition .= $lines[$i];
 
-            if ($i+1 < $c) {
+            if ($i + 1 < $c) {
                 $addition .= "\n";
             }
         }

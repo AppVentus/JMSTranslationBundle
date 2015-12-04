@@ -19,7 +19,6 @@
 namespace JMS\TranslationBundle\Tests\Model;
 
 use JMS\TranslationBundle\Model\FileSource;
-
 use JMS\TranslationBundle\Model\Message;
 
 class MessageTest extends \PHPUnit_Framework_TestCase
@@ -78,10 +77,10 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     public function testGetSources()
     {
         $message = new Message('foo');
-        $this->assertEquals(array(), $message->getSources());
+        $this->assertEquals([], $message->getSources());
 
         $this->assertSame($message, $message->addSource($source = $this->getMock('JMS\TranslationBundle\Model\SourceInterface')));
-        $this->assertSame(array($source), $message->getSources());
+        $this->assertSame([$source], $message->getSources());
     }
 
     public function testMerge()
@@ -99,7 +98,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('bar', $message->getDesc());
         $this->assertEquals('foo', $message->getMeaning());
-        $this->assertSame(array($s1, $s2), $message->getSources());
+        $this->assertSame([$s1, $s2], $message->getSources());
     }
 
     public function testMergeRememberDesc()
@@ -118,7 +117,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo_desc', $message->getDesc());
         $this->assertEquals('foo_desc', $message->getLocaleString());
         $this->assertEquals('bar_meaning', $message->getMeaning());
-        $this->assertSame(array($s1, $s2), $message->getSources());
+        $this->assertSame([$s1, $s2], $message->getSources());
     }
 
     public function testMergeExisting()
@@ -136,7 +135,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $message->getDesc());
         $this->assertEquals('foobar', $message->getLocaleString());
         $this->assertFalse($message->isNew());
-        $this->assertEquals(array(), $message->getSources());
+        $this->assertEquals([], $message->getSources());
     }
 
     public function testGetIsNew()
@@ -165,8 +164,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('equals')
             ->with($s2)
-            ->will($this->returnValue(true))
-        ;
+            ->will($this->returnValue(true));
 
         $message->addSource($s1);
         $this->assertTrue($message->hasSource($s2));

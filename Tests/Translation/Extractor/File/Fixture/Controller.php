@@ -42,33 +42,33 @@ class Controller
 
     public function indexAction()
     {
-        $this->session->setFlash('foo', $this->translator->trans(/** @Desc("Foo bar") */ 'text.foo_bar'));
+        $this->session->setFlash('foo', $this->translator->trans(/* @Desc("Foo bar") */ 'text.foo_bar'));
     }
 
     public function welcomeAction()
     {
         $this->session->setFlash('bar',
-            /** @Desc("Welcome %name%! Thanks for signing up.") */
-            $this->translator->trans('text.sign_up_successful', array('name' => 'Johannes')));
+            /* @Desc("Welcome %name%! Thanks for signing up.") */
+            $this->translator->trans('text.sign_up_successful', ['name' => 'Johannes']));
     }
 
     public function foobarAction()
     {
         $this->session->setFlash('archive',
-            /** @Desc("Archive Message") @Meaning("The verb (to archive), describes an action") */
+            /* @Desc("Archive Message") @Meaning("The verb (to archive), describes an action") */
             $this->translator->trans('button.archive'));
     }
 
     public function nonExtractableButIgnoredAction()
     {
-        /** @Ignore */ $this->translator->trans($foo);
-        /** Foobar */
-        /** @Ignore */ $this->translator->trans('foo', array(), $baz);
+        /* @Ignore */ $this->translator->trans($foo);
+        /* Foobar */
+        /* @Ignore */ $this->translator->trans('foo', [], $baz);
     }
 
     public function irrelevantDocComment()
     {
-        /** @Foo @Bar */ $this->translator->trans('text.irrelevant_doc_comment', array(), 'baz');
+        /* @Foo @Bar */ $this->translator->trans('text.irrelevant_doc_comment', [], 'baz');
     }
 
     public function arrayAccess()
@@ -78,7 +78,7 @@ class Controller
 
     public function assignToVar()
     {
-        /** @Desc("The var %foo% should be assigned.") */
-        return $this->translator->trans('text.var.assign', array('%foo%' => 'fooVar'));
+        /* @Desc("The var %foo% should be assigned.") */
+        return $this->translator->trans('text.var.assign', ['%foo%' => 'fooVar']);
     }
 }

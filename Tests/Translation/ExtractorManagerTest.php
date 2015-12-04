@@ -19,13 +19,10 @@
 namespace JMS\TranslationBundle\Tests\Translation;
 
 use JMS\TranslationBundle\Model\Message;
-
 use JMS\TranslationBundle\Model\MessageCatalogue;
-
-use Symfony\Component\HttpKernel\Log\NullLogger;
-
 use JMS\TranslationBundle\Translation\Extractor\FileExtractor;
 use JMS\TranslationBundle\Translation\ExtractorManager;
+use Symfony\Component\HttpKernel\Log\NullLogger;
 
 class ExtractorManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -36,7 +33,7 @@ class ExtractorManagerTest extends \PHPUnit_Framework_TestCase
     public function testSetEnabledCustomExtractorsThrowsExceptionWhenAliasInvalid()
     {
         $manager = $this->getManager();
-        $manager->setEnabledExtractors(array('foo' => true));
+        $manager->setEnabledExtractors(['foo' => true]);
     }
 
     public function testOnlySomeExtractorsEnabled()
@@ -44,8 +41,7 @@ class ExtractorManagerTest extends \PHPUnit_Framework_TestCase
         $foo = $this->getMock('JMS\TranslationBundle\Translation\ExtractorInterface');
         $foo
             ->expects($this->never())
-            ->method('extract')
-        ;
+            ->method('extract');
 
         $catalogue = new MessageCatalogue();
         $catalogue->add(new Message('foo'));
@@ -53,14 +49,13 @@ class ExtractorManagerTest extends \PHPUnit_Framework_TestCase
         $bar
             ->expects($this->once())
             ->method('extract')
-            ->will($this->returnValue($catalogue))
-        ;
+            ->will($this->returnValue($catalogue));
 
-        $manager = $this->getManager(null, array(
+        $manager = $this->getManager(null, [
             'foo' => $foo,
             'bar' => $bar,
-        ));
-        $manager->setEnabledExtractors(array('bar' => true));
+        ]);
+        $manager->setEnabledExtractors(['bar' => true]);
 
         $this->assertEquals($catalogue, $manager->extract());
     }
@@ -70,17 +65,17 @@ class ExtractorManagerTest extends \PHPUnit_Framework_TestCase
         $foo = $this->getMock('JMS\TranslationBundle\Translation\ExtractorInterface');
         $logger = new NullLogger();
 
-        $extractor = new FileExtractor(new \Twig_Environment(), $logger, array());
-        $extractor->setExcludedNames(array('foo', 'bar'));
-        $extractor->setExcludedDirs(array('baz'));
+        $extractor = new FileExtractor(new \Twig_Environment(), $logger, []);
+        $extractor->setExcludedNames(['foo', 'bar']);
+        $extractor->setExcludedDirs(['baz']);
 
-        $manager = $this->getManager($extractor, array(
+        $manager = $this->getManager($extractor, [
             'foo' => $foo,
-        ));
-        $manager->setEnabledExtractors(array('foo' => true));
-        $manager->setDirectories(array('/'));
+        ]);
+        $manager->setEnabledExtractors(['foo' => true]);
+        $manager->setDirectories(['/']);
 
-        $managerReflection   = new \ReflectionClass($manager);
+        $managerReflection = new \ReflectionClass($manager);
         $extractorReflection = new \ReflectionClass($extractor);
 
         $enabledExtractorsProperty = $managerReflection->getProperty('enabledExtractors');
@@ -95,25 +90,25 @@ class ExtractorManagerTest extends \PHPUnit_Framework_TestCase
         $excludedDirsProperty = $extractorReflection->getProperty('excludedDirs');
         $excludedDirsProperty->setAccessible(true);
 
-        $this->assertEquals(array('foo' => true), $enabledExtractorsProperty->getValue($manager));
-        $this->assertEquals(array('/'), $directoriesProperty->getValue($manager));
-        $this->assertEquals(array('foo', 'bar'), $excludedNamesProperty->getValue($extractor));
-        $this->assertEquals(array('baz'), $excludedDirsProperty->getValue($extractor));
+        $this->assertEquals(['foo' => true], $enabledExtractorsProperty->getValue($manager));
+        $this->assertEquals(['/'], $directoriesProperty->getValue($manager));
+        $this->assertEquals(['foo', 'bar'], $excludedNamesProperty->getValue($extractor));
+        $this->assertEquals(['baz'], $excludedDirsProperty->getValue($extractor));
 
         $manager->reset();
 
-        $this->assertEquals(array(), $enabledExtractorsProperty->getValue($manager));
-        $this->assertEquals(array(), $directoriesProperty->getValue($manager));
-        $this->assertEquals(array(), $excludedNamesProperty->getValue($extractor));
-        $this->assertEquals(array(), $excludedDirsProperty->getValue($extractor));
+        $this->assertEquals([], $enabledExtractorsProperty->getValue($manager));
+        $this->assertEquals([], $directoriesProperty->getValue($manager));
+        $this->assertEquals([], $excludedNamesProperty->getValue($extractor));
+        $this->assertEquals([], $excludedDirsProperty->getValue($extractor));
     }
 
-    private function getManager(FileExtractor $extractor = null, array $extractors = array())
+    private function getManager(FileExtractor $extractor = null, array $extractors = [])
     {
         $logger = new NullLogger();
 
         if (null === $extractor) {
-            $extractor = new FileExtractor(new \Twig_Environment(), $logger, array());
+            $extractor = new FileExtractor(new \Twig_Environment(), $logger, []);
         }
 
         return new ExtractorManager($extractor, $logger, $extractors);

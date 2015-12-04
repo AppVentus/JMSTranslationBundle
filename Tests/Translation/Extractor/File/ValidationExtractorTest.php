@@ -18,19 +18,13 @@
 
 namespace JMS\TranslationBundle\Tests\Translation\Extractor\File;
 
-use JMS\TranslationBundle\Exception\RuntimeException;
 use Doctrine\Common\Annotations\AnnotationReader;
-
-use Symfony\Component\Validator\Mapping\Loader\AnnotationLoader;
-
-use Symfony\Component\Validator\Mapping\ClassMetadataFactory;
-
-use JMS\TranslationBundle\Translation\Extractor\File\ValidationExtractor;
-use Doctrine\Common\Annotations\DocParser;
-use JMS\TranslationBundle\Translation\Extractor\File\FormExtractor;
-use JMS\TranslationBundle\Model\FileSource;
+use JMS\TranslationBundle\Exception\RuntimeException;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
+use JMS\TranslationBundle\Translation\Extractor\File\ValidationExtractor;
+use Symfony\Component\Validator\Mapping\ClassMetadataFactory;
+use Symfony\Component\Validator\Mapping\Loader\AnnotationLoader;
 
 class ValidationExtractorTest extends \PHPUnit_Framework_TestCase
 {

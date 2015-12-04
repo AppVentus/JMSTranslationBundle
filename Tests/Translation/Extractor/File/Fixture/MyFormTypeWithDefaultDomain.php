@@ -18,8 +18,8 @@
 
 namespace JMS\TranslationBundle\Tests\Translation\Extractor\File\Fixture;
 
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class MyFormType extends AbstractType
@@ -27,23 +27,22 @@ class MyFormType extends AbstractType
     public function buildForm(FormBuilder $builder, array $options)
     {
         $builder
-            ->add('firstname', 'text', array(
+            ->add('firstname', 'text', [
                 'label' => 'form.label.firstname',
-            ))
-            ->add('lastname', 'text', array(
-                'label' => /** @Desc("Lastname") */ 'form.label.lastname',
-            ))
-            ->add('street', 'text', array(
-                'label' => /** @Desc("Street") */ 'form.label.street',
-                'translation_domain' => 'address'
-            ))
-        ;
+            ])
+            ->add('lastname', 'text', [
+                'label' => /* @Desc("Lastname") */ 'form.label.lastname',
+            ])
+            ->add('street', 'text', [
+                'label'              => /* @Desc("Street") */ 'form.label.street',
+                'translation_domain' => 'address',
+            ]);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'translation_domain' => 'person'
-        ));
+        $resolver->setDefaults([
+            'translation_domain' => 'person',
+        ]);
     }
 }

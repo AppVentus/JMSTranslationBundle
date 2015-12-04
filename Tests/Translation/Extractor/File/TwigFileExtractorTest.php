@@ -18,26 +18,24 @@
 
 namespace JMS\TranslationBundle\Tests\Translation\Extractor\File;
 
-use Symfony\Bridge\Twig\Form\TwigRendererEngine;
-use Symfony\Bridge\Twig\Form\TwigRenderer;
-use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\Generator\UrlGenerator;
-use Symfony\Bridge\Twig\Extension\RoutingExtension;
-use JMS\TranslationBundle\Twig\RemovingNodeVisitor;
-use JMS\TranslationBundle\Twig\DefaultApplyingNodeVisitor;
 use JMS\TranslationBundle\Exception\RuntimeException;
-use Symfony\Component\Translation\MessageSelector;
-use Symfony\Component\Translation\IdentityTranslator;
-use Symfony\Bridge\Twig\Extension\TranslationExtension as SymfonyTranslationExtension;
 use JMS\TranslationBundle\Model\FileSource;
 use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
-use JMS\TranslationBundle\Twig\TranslationExtension;
 use JMS\TranslationBundle\Translation\Extractor\File\TwigFileExtractor;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\DependencyInjection\Container;
+use JMS\TranslationBundle\Twig\DefaultApplyingNodeVisitor;
+use JMS\TranslationBundle\Twig\RemovingNodeVisitor;
+use JMS\TranslationBundle\Twig\TranslationExtension;
 use Symfony\Bridge\Twig\Extension\FormExtension;
+use Symfony\Bridge\Twig\Extension\RoutingExtension;
+use Symfony\Bridge\Twig\Extension\TranslationExtension as SymfonyTranslationExtension;
+use Symfony\Bridge\Twig\Form\TwigRenderer;
+use Symfony\Bridge\Twig\Form\TwigRendererEngine;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Translation\IdentityTranslator;
+use Symfony\Component\Translation\MessageSelector;
 
 class TwigFileExtractorTest extends \PHPUnit_Framework_TestCase
 {
@@ -106,7 +104,7 @@ class TwigFileExtractorTest extends \PHPUnit_Framework_TestCase
         $message->addSource(new FileSource($path, 10));
         $expected->add($message);
 
-        $message = new Message("text.archive");
+        $message = new Message('text.archive');
         $message->setDesc('Archive');
         $message->setMeaning('The verb');
         $message->addSource(new FileSource($path, 13));
@@ -126,14 +124,14 @@ class TwigFileExtractorTest extends \PHPUnit_Framework_TestCase
 
     public function testEmbeddedTemplate()
     {
-    	$expected = new MessageCatalogue();
+        $expected = new MessageCatalogue();
         $path = __DIR__.'/Fixture/embedded_template.html.twig';
 
         $message = new Message('foo');
         $message->addSource(new FileSource($path, 3));
         $expected->add($message);
 
-    	$this->assertEquals($expected, $this->extract('embedded_template.html.twig'));
+        $this->assertEquals($expected, $this->extract('embedded_template.html.twig'));
     }
 
     private function extract($file, TwigFileExtractor $extractor = null)

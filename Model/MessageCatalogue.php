@@ -35,7 +35,7 @@ use JMS\TranslationBundle\Exception\InvalidArgumentException;
 class MessageCatalogue
 {
     private $locale;
-    private $domains = array();
+    private $domains = [];
 
     /**
      * @param $locale
@@ -60,8 +60,7 @@ class MessageCatalogue
     {
         $this
             ->getOrCreateDomain($message->getDomain())
-            ->add($message)
-        ;
+            ->add($message);
     }
 
     /**
@@ -71,14 +70,15 @@ class MessageCatalogue
     {
         $this
             ->getOrCreateDomain($message->getDomain())
-            ->set($message)
-        ;
+            ->set($message);
     }
 
     /**
      * @param $id
      * @param $domain
+     *
      * @throws \JMS\TranslationBundle\Exception\InvalidArgumentException
+     *
      * @return Message
      */
     public function get($id, $domain = 'messages')
@@ -88,7 +88,8 @@ class MessageCatalogue
 
     /**
      * @param Message $message
-     * @return Boolean
+     *
+     * @return bool
      */
     public function has(Message $message)
     {
@@ -111,7 +112,8 @@ class MessageCatalogue
 
     /**
      * @param string $domain
-     * @return Boolean
+     *
+     * @return bool
      */
     public function hasDomain($domain)
     {
@@ -120,6 +122,7 @@ class MessageCatalogue
 
     /**
      * @param string $domain
+     *
      * @return MessageCollection
      */
     public function getDomain($domain)
@@ -138,6 +141,7 @@ class MessageCatalogue
 
     /**
      * @param string $domain
+     *
      * @return MessageCollection
      */
     private function getOrCreateDomain($domain)

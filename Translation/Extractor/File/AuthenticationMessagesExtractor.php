@@ -18,16 +18,16 @@
 
 namespace JMS\TranslationBundle\Translation\Extractor\File;
 
-use JMS\TranslationBundle\Exception\RuntimeException;
-use JMS\TranslationBundle\Model\FileSource;
-use JMS\TranslationBundle\Model\Message;
-use JMS\TranslationBundle\Annotation\Meaning;
+use Doctrine\Common\Annotations\DocParser;
 use JMS\TranslationBundle\Annotation\Desc;
 use JMS\TranslationBundle\Annotation\Ignore;
+use JMS\TranslationBundle\Annotation\Meaning;
+use JMS\TranslationBundle\Exception\RuntimeException;
+use JMS\TranslationBundle\Logger\LoggerAwareInterface;
+use JMS\TranslationBundle\Model\FileSource;
+use JMS\TranslationBundle\Model\Message;
 use JMS\TranslationBundle\Model\MessageCatalogue;
 use JMS\TranslationBundle\Translation\Extractor\FileVisitorInterface;
-use Doctrine\Common\Annotations\DocParser;
-use JMS\TranslationBundle\Logger\LoggerAwareInterface;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 
 class AuthenticationMessagesExtractor implements LoggerAwareInterface, FileVisitorInterface, \PHPParser_NodeVisitor
@@ -114,9 +114,9 @@ class AuthenticationMessagesExtractor implements LoggerAwareInterface, FileVisit
             foreach ($this->docParser->parse($docComment, 'file '.$this->file.' near line '.$node->getLine()) as $annot) {
                 if ($annot instanceof Ignore) {
                     $ignore = true;
-                } else if ($annot instanceof Desc) {
+                } elseif ($annot instanceof Desc) {
                     $desc = $annot->text;
-                } else if ($annot instanceof Meaning) {
+                } elseif ($annot instanceof Meaning) {
                     $meaning = $annot->text;
                 }
             }
@@ -140,8 +140,7 @@ class AuthenticationMessagesExtractor implements LoggerAwareInterface, FileVisit
         $message = Message::create($node->expr->value, $this->domain)
             ->setDesc($desc)
             ->setMeaning($meaning)
-            ->addSource(new FileSource((string) $this->file, $node->expr->getLine()))
-        ;
+            ->addSource(new FileSource((string) $this->file, $node->expr->getLine()));
 
         $this->catalogue->add($message);
     }
@@ -169,8 +168,19 @@ class AuthenticationMessagesExtractor implements LoggerAwareInterface, FileVisit
         }
     }
 
-    public function beforeTraverse(array $nodes) { }
-    public function afterTraverse(array $nodes) { }
-    public function visitFile(\SplFileInfo $file, MessageCatalogue $catalogue) { }
-    public function visitTwigFile(\SplFileInfo $file, MessageCatalogue $catalogue, \Twig_Node $ast) { }
+    public function beforeTraverse(array $nodes)
+    {
+    }
+
+    public function afterTraverse(array $nodes)
+    {
+    }
+
+    public function visitFile(\SplFileInfo $file, MessageCatalogue $catalogue)
+    {
+    }
+
+    public function visitTwigFile(\SplFileInfo $file, MessageCatalogue $catalogue, \Twig_Node $ast)
+    {
+    }
 }
